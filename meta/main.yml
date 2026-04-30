@@ -1,0 +1,31 @@
+---
+galaxy_info:
+  role_name: sing_box
+  author: foi
+  description: sing-box ansible role
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+  license: MIT
+
+  min_ansible_version: "2.16"
+
+  galaxy_tags:
+    - sing-box
+    - tunnel
+    - udp
+    - tcp
+    - http-proxy
+    - https-proxy
+    - socks5
+    - forward
+
+dependencies: []

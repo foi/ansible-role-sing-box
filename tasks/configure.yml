@@ -1,0 +1,35 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+- name: create sing-box user
+  ansible.builtin.user:
+    name: "{{ sing_box_user }}"
+    shell: "{{ '/usr/sbin/nologin' if ansible_facts['os_family'] == 'RedHat' else '/sbin/nologin' }}"
+    system: true
+    create_home: false
+
+- name: mkdir config dir
+  ansible.builtin.file:
+    path: "{{ sing_box_config_path }}"
+    mode: '0755'
+    state: directory
+
+- name: render systemd service
+  ansible.builtin.template:
+    src: sing-box.service.ini.j2
+    dest: "/etc/systemd/system/{{ sing_box_service_name }}.service"
+    mode: "0644"
+  notify:
+    - enable sing-box
+    - restart sing-box
+
+- name: render config
+  ansible.builtin.copy:
+    content: "{{ sing_box_config }}"
+    dest: "{{ sing_box_config_path }}/sing-box.json"
+    validate: "{{ sing_box_binary_path }}/sing-box check -c %s"
+    mode: "{{ sing_box_config_mode }}"
+    owner: "{{ sing_box_user }}"
+  notify:
+    - enable sing-box
+    - restart sing-box

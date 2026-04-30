@@ -1,0 +1,24 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+- name: download sing-box release
+  ansible.builtin.uri:
+    url: "{{ sing_box_download_url }}"
+    dest: "{{ sing_box_tmp_path }}"
+    creates: "{{ sing_box_tmp_path }}/{{ sing_box_download_url | split('/') | last }}"
+    mode: '0644'
+
+- name: unarchive
+  ansible.builtin.unarchive:
+    src: "{{ sing_box_tmp_path }}/{{ sing_box_download_url | split('/') | last }}"
+    dest: "{{ sing_box_binary_path }}"
+    creates: "{{ sing_box_binary_path}}/sing-box"
+    mode: '0755'
+    extra_opts:
+      - --strip-components=1
+    exclude:
+      - LICENSE
+    remote_src: true
+  notify:
+    - restart sing-box
+    - enable sing-box

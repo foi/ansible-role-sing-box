@@ -1,0 +1,14 @@
+# code: language=ansible
+# vim: set filetype=yaml.ansible :
+---
+- name: enable sing-box
+  ansible.builtin.systemd:
+    name: sing-box
+    enabled: true
+    daemon_reload: true
+
+- name: restart sing-box
+  ansible.builtin.systemd:
+    name: sing-box
+    state: restarted
+    daemon_reload: true

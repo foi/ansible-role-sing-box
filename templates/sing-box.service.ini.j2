@@ -1,0 +1,26 @@
+[Unit]
+Description=sing-box
+{% if sing_box_unit_options is defined and sing_box_unit_options.items() | length > 0 %}
+{% for k, v in sing_box_unit_options.items() %}
+{{ k }}={{ v }}
+{% endfor %}
+{% else %}
+{% for k, v in sing_box_default_unit_options.items() %}
+{{ k }}={{ v }}
+{% endfor %}
+{% endif %}
+
+[Service]
+ExecStart={{ sing_box_binary_path }}/sing-box run -c {{ sing_box_config_path }}/sing-box.json
+{% if sing_box_service_options is defined and sing_box_service_options.items() | length > 0 %}
+{% for k, v in sing_box_service_options.items() %}
+{{ k }}={{ v }}
+{% endfor %}
+{% else %}
+{% for k, v in sing_box_default_service_options.items() %}
+{{ k }}={{ v }}
+{% endfor %}
+{% endif %}
+
+[Install]
+WantedBy=default.target
