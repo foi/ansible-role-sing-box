@@ -37,9 +37,11 @@ sing_box_config_path: "/etc/{{ sing_box_service_name }}"
 sing_box_config_mode: '0640'
 sing_box_config: |
   define your own sing box config (here you may use jinja for templating)
+# you can redifine this by using sing_box_unit_options: {}
 sing_box_default_unit_options:
   Wants: network-online.target
   After: network-online.target
+# you can redifine this by using sing_box_service_options: {}
 sing_box_default_service_options:
   User: "{{ sing_box_user }}"
   Restart: always
