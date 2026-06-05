@@ -27,7 +27,7 @@ and run `ansible-galaxy install -r requirements.yml`
 Role Variables
 --------------
 ```yml
-sing_box_version: 1.13.12
+sing_box_version: 1.13.13
 sing_box_download_url: "https://github.com/SagerNet/sing-box/releases/download/v{{ sing_box_version }}/sing-box-{{ sing_box_version }}-linux-amd64-musl.tar.gz"
 sing_box_tmp_path: /tmp
 sing_box_binary_path: /usr/local/bin
